@@ -249,8 +249,7 @@ def summarize_address_range(first, last):
     """Summarize a network range given the first and last IP addresses.
 
     Example:
-        >>> summarize_address_range(IPv4Address('192.0.2.0'),
-            IPv4Address('192.0.2.130'))
+        >>> summarize_address_range(IPv4Address('192.0.2.0'), IPv4Address('192.0.2.130'))
         [IPv4Network('192.0.2.0/25'), IPv4Network('192.0.2.128/31'),
         IPv4Network('192.0.2.130/32')]
 
@@ -277,8 +276,6 @@ def summarize_address_range(first, last):
                 str(first), str(last)))
     if first > last:
         raise ValueError('last IP address must be greater than first')
-
-    networks = []
 
     if first.version == 4:
         ip = IPv4Network
@@ -873,8 +870,6 @@ class _BaseNetwork(_IPAddressBase):
 
         if other == self:
             raise StopIteration
-
-        ret_addrs = []
 
         # Make sure we're comparing the network of other.
         other = ip_network('%s/%s' % (str(other.network_address),
@@ -2018,6 +2013,7 @@ class IPv6Interface(IPv6Address):
     @property
     def prefixlen(self):
         return self._prefixlen
+
     @property
     def ip(self):
         return IPv6Address(self._ip)
@@ -2029,6 +2025,7 @@ class IPv6Interface(IPv6Address):
     @property
     def with_netmask(self):
         return self.with_prefixlen
+
     @property
     def with_hostmask(self):
         return '%s/%s' % (self._string_from_ip_int(self._ip),
@@ -2141,10 +2138,6 @@ class IPv6Network(_BaseV6, _BaseNetwork):
     def __str__(self):
         return '%s/%d' % (str(self.network_address),
                           self.prefixlen)
-
-    @property
-    def with_netmask(self):
-        return self.with_prefixlen
 
     @property
     def with_prefixlen(self):

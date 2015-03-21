@@ -3,28 +3,56 @@
 import json
 import sys
 import re
-from ipaddress import *
+from ipaddress import IPv6Address, IPv6Network
 from time import time
+import argparse
 
-ValidHostnameRegex = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$"
-prefix = IPv6Network('fd56:b4dc:4b1e::/64')
+config = {
+  'mz': {
+    'prefix': 'fd37:b4dc:4b1e::/64',
+    'soa': 'spinat.ffmz.org. hostmaster.ffmz.org.',
+    'ns': [
+      'spinat.ffmz.org.',
+      'hinterschinken.ffmz.org.',
+      'lotuswurzel.ffmz.org.'
+    ]
+  },
+  'wi': {
+    'prefix': 'fd56:b4dc:4b1e::/64',
+    'soa': 'spinat.ffwi.org. hostmaster.ffwi.org.',
+    'ns': [
+      'spinat.ffwi.org.',
+      'hinterschinken.ffwi.org.',
+      'lotuswurzel.ffwi.org.'
+    ]
+  }
+}
+
+parser = argparse.ArgumentParser()
+parser.add_argument('community', action='store', choices=config.keys())
+args = parser.parse_args()
+
+HostnameRegex = re.compile(
+  "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$"
+)
+prefix = IPv6Network(config[args.community]['prefix'])
 
 data = json.load(sys.stdin)
 
 print("""$TTL 300  ; 5 minutes
-@     IN SOA   spinat.ffwi.org. hostmaster.ffwi.org. (
+@     IN SOA   %s (
           %i ; serial
           600        ; refresh (10min)
           30         ; retry (30s)
           3600       ; expire (1 hour)
           60         ; minimum (1 minute)
           )
-      NS  spinat.ffwi.org.
-      NS  hinterschinken.ffwi.org.
-      NS  lotuswurzel.ffwi.org.
-      """ % time())
-
-HostnameRegex = re.compile(ValidHostnameRegex)
+\tNS %s
+      """ %(
+        config[args.community]['soa'],
+        time(),
+        '\n\tNS  '.join(config[args.community]['ns'])
+      ) )
 
 for i in data:
   node = data[i]
