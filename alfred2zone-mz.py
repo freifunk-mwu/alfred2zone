@@ -7,21 +7,21 @@ from ipaddress import *
 from time import time
 
 ValidHostnameRegex = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$"
-prefix = IPv6Network('fd56:b4dc:4b1e::/64')
+prefix = IPv6Network('fd37:b4dc:4b1e::/64')
 
 data = json.load(sys.stdin)
 
 print("""$TTL 300  ; 5 minutes
-@     IN SOA   spinat.ffwi.org. hostmaster.ffwi.org. (
+@     IN SOA   spinat.ffmz.org. hostmaster.ffmz.org. (
           %i ; serial
           600        ; refresh (10min)
           30         ; retry (30s)
           3600       ; expire (1 hour)
           60         ; minimum (1 minute)
           )
-      NS  spinat.ffwi.org.
-      NS  hinterschinken.ffwi.org.
-      NS  lotuswurzel.ffwi.org.
+      NS  spinat.ffmz.org.
+      NS  hinterschinken.ffmz.org.
+      NS  lotuswurzel.ffmz.org.
       """ % time())
 
 HostnameRegex = re.compile(ValidHostnameRegex)
