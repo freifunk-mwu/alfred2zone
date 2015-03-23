@@ -41,11 +41,11 @@ data = json.load(sys.stdin)
 
 print("""$TTL 300  ; 5 minutes
 @     IN SOA   %s (
-          %i ; serial
-          600        ; refresh (10min)
-          30         ; retry (30s)
-          3600       ; expire (1 hour)
-          60         ; minimum (1 minute)
+          %i        ; Serial
+          2h        ; Refresh
+          1h        ; Retry
+          41d       ; Expire
+          300       ; Negative Cache TTL
           )
 \tNS %s
       """ %(
