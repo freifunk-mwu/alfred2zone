@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 export LC_ALL=en_US.UTF-8
 WORKDIR="/home/admin/clones/alfred2zone"
 BINDDIR="/var/lib/bind"
