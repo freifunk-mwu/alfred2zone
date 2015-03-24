@@ -6,6 +6,7 @@ import re
 from ipaddress import IPv6Address, IPv6Network
 from time import time
 import argparse
+import subprocess
 
 config = {
   'mz': {
@@ -15,7 +16,8 @@ config = {
       'spinat.ffmz.org.',
       'hinterschinken.ffmz.org.',
       'lotuswurzel.ffmz.org.'
-    ]
+    ],
+    'socket': '/var/run/alfred-mz.sock'
   },
   'wi': {
     'prefix': 'fd56:b4dc:4b1e::/64',
@@ -24,7 +26,8 @@ config = {
       'spinat.ffwi.org.',
       'hinterschinken.ffwi.org.',
       'lotuswurzel.ffwi.org.'
-    ]
+    ],
+    'socket': '/var/run/alfred-wi.sock'
   }
 }
 
@@ -37,7 +40,7 @@ HostnameRegex = re.compile(
 )
 prefix = IPv6Network(config[args.community]['prefix'])
 
-data = json.load(sys.stdin)
+data = json.loads(subprocess.check_output(["alfred-json","-z","-f","json","-r","158","-s",str(config[args.community]['socket'])]).decode("utf-8"))
 
 print("""$TTL 300  ; 5 minutes
 @     IN SOA   %s (
