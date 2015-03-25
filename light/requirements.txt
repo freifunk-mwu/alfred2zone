@@ -1,0 +1,2 @@
+ipaddress==1.0
+photon_core==0.4a9
