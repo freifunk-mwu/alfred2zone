@@ -37,7 +37,7 @@ def _check(data, prefix):
                 for address in [
                     a for a in node['network']['addresses'] if IPv6Address(a) in prefix
                 ]:
-                    res.append((node['hostname'], address))
+                    res.append((str.lower(node['hostname']), address))
     return sorted(set(res))
 
 def _write(elems, community):
