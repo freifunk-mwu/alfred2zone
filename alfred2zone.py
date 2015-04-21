@@ -11,7 +11,7 @@ import subprocess
 config = {
   'mz': {
     'prefix': 'fd37:b4dc:4b1e::/64',
-    'soa': 'spinat.ffmz.org. hostmaster.ffmz.org.',
+    'soa': 'aubergine.ffmz.org. hostmaster.ffmz.org.',
     'ns': [
       'spinat.ffmz.org.',
       'hinterschinken.ffmz.org.',
@@ -21,7 +21,7 @@ config = {
   },
   'wi': {
     'prefix': 'fd56:b4dc:4b1e::/64',
-    'soa': 'spinat.ffwi.org. hostmaster.ffwi.org.',
+    'soa': 'aubergine.ffwi.org. hostmaster.ffwi.org.',
     'ns': [
       'spinat.ffwi.org.',
       'hinterschinken.ffwi.org.',
