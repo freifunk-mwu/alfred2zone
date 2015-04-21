@@ -52,7 +52,7 @@ def _write(elems, community):
             settings['zone'].format(
                 soa=soa,
                 serial=int(time()),
-                ns='\n'.join(['    %s    NS' %(n) for n in ns]),
+                ns='\n'.join(['    NS    %s' %(n) for n in ns]),
                 nodes='\n'.join(['%s    AAAA    %s' %(n, a) for (n, a) in elems]),
             )
         )
