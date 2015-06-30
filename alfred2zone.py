@@ -14,8 +14,9 @@ config = {
     'soa': 'aubergine.ffmz.org. hostmaster.ffmz.org.',
     'ns': [
       'spinat.ffmz.org.',
-      'hinterschinken.ffmz.org.',
-      'lotuswurzel.ffmz.org.'
+      'wasserfloh.ffmz.org.',
+      'lotuswurzel.ffmz.org.',
+      'kaschu.ffmz.org.'
     ],
     'socket': '/var/run/alfred-mz.sock'
   },
@@ -24,8 +25,9 @@ config = {
     'soa': 'aubergine.ffwi.org. hostmaster.ffwi.org.',
     'ns': [
       'spinat.ffwi.org.',
-      'hinterschinken.ffwi.org.',
-      'lotuswurzel.ffwi.org.'
+      'wasserfloh.ffwi.org.',
+      'lotuswurzel.ffwi.org.',
+      'kaschu.ffwi.org.'
     ],
     'socket': '/var/run/alfred-wi.sock'
   }

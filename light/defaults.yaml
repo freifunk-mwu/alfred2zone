@@ -1,15 +1,15 @@
 _bind_dir: &bind /var/lib/bind/
 _sock_dir: &sock /var/run/
 alfred_cmd: 'sudo alfred-json -z -f json -r 158 -s {socket}'
-# alfred_ssh: hinterschinken
 communities:
     mz:
         prefix: fd37:b4dc:4b1e::/64
         soa: 'aubergine.ffmz.org. hostmaster.ffmz.org.'
         ns:
             - spinat.ffmz.org.
-            - hinterschinken.ffmz.org.
+            - wasserfloh.ffmz.org.
             - lotuswurzel.ffmz.org.
+            - kaschu.ffmz.org.
         socket: !loc_join [*sock, 'alfred-mz.sock']
         zonefile: !loc_join [*bind, 'ffmz/nodes.ffmz.org.master.db']
     wi:
@@ -17,8 +17,9 @@ communities:
         soa: 'aubergine.ffwi.org. hostmaster.ffwi.org.'
         ns:
             - spinat.ffwi.org.
-            - hinterschinken.ffwi.org.
+            - wasserfloh.ffwi.org.
             - lotuswurzel.ffwi.org.
+            - kaschu.ffwi.org.
         socket: !loc_join [*sock, 'alfred-wi.sock']
         zonefile: !loc_join [*bind, 'ffwi/nodes.ffwi.org.master.db']
 post_cmd: 'sudo rndc reload'
