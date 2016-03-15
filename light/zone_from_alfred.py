@@ -4,6 +4,7 @@ from photon import Photon
 from photon.util.files import write_file
 from re import compile as re_compile
 from time import time
+import requests
 
 hostname_rx = r'^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$'
 
@@ -15,29 +16,21 @@ photon = Photon(
 )
 settings = photon.settings.get
 
-def _rtrv(socket):
-    cmd = settings['alfred_cmd'].format(socket=socket)
-    if settings.get('alfred_ssh'):
-        cmd = 'ssh {ssh} "{cmd}"'.format(cmd=cmd, ssh=settings['alfred_ssh'])
-    res = photon.m(
-        'asking alfred%s (%s)' %(' over ssh' if settings.get('alfred_ssh') else '', socket),
-        cmdd=dict(cmd=cmd)
-    )
-    if res.get('returncode') == 0:
-        return loads(''.join(res.get('stdout')))
-    return dict()
+def _rtrv(url):
+    rawdata = requests.get(url, verify=False)
+    res = rawdata.json()
+    return res
 
 def _check(data, prefix):
     res = list()
     if data:
-        for mac in data:
-            node = data.get(mac)
-            hostname = node['hostname']
+        for node in data['nodes']:
+            hostname = node['nodeinfo']['hostname']
             if re_compile(hostname_rx).match(hostname):
                 for address in [
-                    a for a in node['network']['addresses'] if IPv6Address(a) in prefix
+                    a for a in node['nodeinfo']['network']['addresses'] if IPv6Address(a) in prefix
                 ]:
-                    res.append((str.lower(node['hostname']), address))
+                    res.append((str.lower(node['nodeinfo']['hostname']), address))
     return sorted(set(res))
 
 def _write(elems, community):
@@ -61,14 +54,14 @@ def _write(elems, community):
 def run():
     res = list()
     for community in settings['communities'].keys():
-        prefix, socket = (
+        prefix, url = (
             settings['communities'][community].get('prefix'),
-            settings['communities'][community].get('socket')
+            settings['communities'][community].get('url')
         )
-        if all([prefix, socket]):
+        if all([prefix, url]):
             res.append(_write(
                 _check(
-                    _rtrv(socket), IPv6Network(prefix)
+                    _rtrv(url), IPv6Network(prefix)
                 ),
                 community
             ))

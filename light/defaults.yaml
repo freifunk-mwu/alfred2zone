@@ -1,8 +1,7 @@
 _bind_dir: &bind /var/lib/bind/
-_sock_dir: &sock /var/run/
-alfred_cmd: 'sudo alfred-json -z -f json -r 158 -s {socket}'
 communities:
     mz:
+        url: http://map.ffmz.org/data/nodes.json
         prefix: fd37:b4dc:4b1e::/64
         soa: 'aubergine.ffmz.org. hostmaster.ffmz.org.'
         ns:
@@ -10,9 +9,9 @@ communities:
             - wasserfloh.ffmz.org.
             - lotuswurzel.ffmz.org.
             - kaschu.ffmz.org.
-        socket: !loc_join [*sock, 'alfred-mz.sock']
         zonefile: !loc_join [*bind, 'ffmz/nodes.ffmz.org.master.db']
     wi:
+        url: http://map.ffwi.org/data/nodes.json
         prefix: fd56:b4dc:4b1e::/64
         soa: 'aubergine.ffwi.org. hostmaster.ffwi.org.'
         ns:
@@ -20,17 +19,16 @@ communities:
             - wasserfloh.ffwi.org.
             - lotuswurzel.ffwi.org.
             - kaschu.ffwi.org.
-        socket: !loc_join [*sock, 'alfred-wi.sock']
         zonefile: !loc_join [*bind, 'ffwi/nodes.ffwi.org.master.db']
 post_cmd: 'sudo rndc reload'
 zone: |
     $TTL 300        ; 5 minutes
     @   IN SOA   {soa} (
-        {serial}  ; Serial
-        2h          ; Refresh
-        1h          ; Retry
-        41d         ; Expire
-        300         ; Negative Cache TTL
+        {serial}  ; serial
+        86400     ; refresh (   24 hours   )
+        7200      ; retry   (    2 hours   )
+        3600000   ; expire  ( 1000 hours   )
+        300       ; minimum (    5 minutes )
         )
     {ns}
 
