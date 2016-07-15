@@ -16,7 +16,7 @@ config = {
       'spinat.ffmz.org.',
       'wasserfloh.ffmz.org.',
       'lotuswurzel.ffmz.org.',
-      'kaschu.ffmz.org.'
+      'ingwer.ffmz.org.'
     ],
     'socket': '/var/run/alfred-mz.sock'
   },
@@ -27,7 +27,7 @@ config = {
       'spinat.ffwi.org.',
       'wasserfloh.ffwi.org.',
       'lotuswurzel.ffwi.org.',
-      'kaschu.ffwi.org.'
+      'ingwer.ffwi.org.'
     ],
     'socket': '/var/run/alfred-wi.sock'
   }

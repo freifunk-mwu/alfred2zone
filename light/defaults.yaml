@@ -8,7 +8,7 @@ communities:
             - spinat.ffmz.org.
             - wasserfloh.ffmz.org.
             - lotuswurzel.ffmz.org.
-            - kaschu.ffmz.org.
+            - ingwer.ffmz.org.
         zonefile: !loc_join [*bind, 'ffmz/nodes.ffmz.org.master.db']
     wi:
         url: http://map.ffwi.org/data/nodes.json
@@ -18,7 +18,7 @@ communities:
             - spinat.ffwi.org.
             - wasserfloh.ffwi.org.
             - lotuswurzel.ffwi.org.
-            - kaschu.ffwi.org.
+            - ingwer.ffwi.org.
         zonefile: !loc_join [*bind, 'ffwi/nodes.ffwi.org.master.db']
 post_cmd: 'sudo rndc reload'
 zone: |
